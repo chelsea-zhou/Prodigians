@@ -20,6 +20,8 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.view.View.OnClickListener;
 
+import android.content.Intent;
+
 import android.support.constraint.ConstraintLayout;
 import android.widget.LinearLayout;
 
@@ -44,13 +46,18 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
                     mTextMessage.setText(R.string.title_home);
-                    return true;
+                    //return true;
+                    break;
                 case R.id.navigation_dashboard:
                     mTextMessage.setText(R.string.title_dashboard);
-                    return true;
+                    Intent intent1 = new Intent(MainActivity.this,Activity_Data.class);
+                    startActivity(intent1);
+                    break;
+
                 case R.id.navigation_notifications:
                     mTextMessage.setText(R.string.title_notifications);
-                    return true;
+                    //return true;
+                    break;
             }
             return false;
         }
