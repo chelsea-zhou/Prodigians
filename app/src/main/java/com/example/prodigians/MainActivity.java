@@ -4,6 +4,9 @@ import android.animation.ObjectAnimator;
 import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.animation.AnimatorListenerAdapter;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.animation.Animation;
 import android.graphics.drawable.AnimationDrawable;
@@ -25,6 +28,13 @@ import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
 import android.widget.LinearLayout;
 
+import com.example.prodigians.models.ActRecord;
+import com.example.prodigians.viewmodels.MAVM;
+
+import java.util.List;
+
+import javax.security.auth.login.LoginException;
+
 public class MainActivity extends AppCompatActivity {
     private TextView mTextMessage;
     ImageView imageView;
@@ -37,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     ViewGroup.LayoutParams paramsInit;
     int defaultWidth;
     int ifBackgroundChanged = 0;
+    MAVM mainViewModel;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -92,6 +103,32 @@ public class MainActivity extends AppCompatActivity {
 
         addListenerOnAnimation();
         animation.start();
+
+        mainViewModel = ViewModelProviders.of(this).get(MAVM.class);
+
+        mainViewModel.init();
+
+        mainViewModel.getNicePlaces().observe(this, new Observer<List<ActRecord>>() {
+            @Override
+            public void onChanged(@Nullable List<ActRecord> actRecords) {
+                Boolean fat = mainViewModel.IsFat();
+                Log.i("myapp",  String.valueOf(fat));
+                if (fat){
+                    if(imageView.getLayoutParams().width >= defaultWidth) {
+                        imageView.requestLayout();
+                        imageView.getLayoutParams().width += 100;
+                        Log.i("myapp","getting fat");
+                    }
+                }else{
+
+                    if(imageView.getLayoutParams().width >= defaultWidth) {
+                        imageView.requestLayout();
+                        imageView.getLayoutParams().width -= 100;
+                        Log.i("myapp", "getting slim ");
+                    }
+                }
+            }
+        });
 
         // Getting all extras
        // Bundle extras = getIntent().getExtras();

@@ -101,18 +101,6 @@ public class Activity_Data extends AppCompatActivity {
                                 13
                         )
                 );
-                Intent intent = new Intent(Activity_Data.this, MainActivity.class);
-                Boolean fat = mMainActivityViewModel.IsFat();
-                Log.i(TAG,  String.valueOf(fat));
-                if (fat){
-
-                    intent.putExtra("message", "Fat");
-                    Log.i(TAG, " fat ");
-                }else{
-                    intent.putExtra("message", "Slim");
-                    Log.i(TAG, " slim ");
-                }
-                startActivity(intent);
 
             }
 
