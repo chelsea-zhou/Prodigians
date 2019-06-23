@@ -93,6 +93,37 @@ public class MainActivity extends AppCompatActivity {
         addListenerOnAnimation();
         animation.start();
 
+        // Getting all extras
+       // Bundle extras = getIntent().getExtras();
+        Log.i("myapp", "onCreate: ");
+        // Getting your int (second param is the default value if null)
+        String value = getIntent().getStringExtra("message");
+        if (value!=null){
+            Log.i("myapp","width: " + String.valueOf(imageView.getLayoutParams().width));
+
+            Log.i("myapp","default: " + String.valueOf(defaultWidth));
+
+            if (value=="Fat"){
+                if(imageView.getLayoutParams().width >= defaultWidth) {
+                    imageView.requestLayout();
+                    imageView.getLayoutParams().width += 20;
+                    Log.i("myapp","getting fat");
+                }
+
+            }else{
+                if(imageView.getLayoutParams().width >= defaultWidth) {
+                    imageView.requestLayout();
+                    imageView.getLayoutParams().width -= 20;
+                    Log.i("myapp", "getting slim ");
+                }
+
+            }
+
+        }else{
+            Log.i("myapp", "value is null ");
+        }
+
+
         BottomNavigationView navView = findViewById(R.id.nav_view);
         mTextMessage = findViewById(R.id.message);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);

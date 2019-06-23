@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.prodigians.R;
-import com.example.prodigians.models.NicePlace;
+import com.example.prodigians.models.ActRecord;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,11 +20,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<NicePlace> mNicePlaces = new ArrayList<>();
+    private List<ActRecord> mActRecords = new ArrayList<>();
     private Context mContext;
 
-    public RecyclerAdapter(Context context, List<NicePlace> nicePlaces) {
-        mNicePlaces = nicePlaces;
+    public RecyclerAdapter(Context context, List<ActRecord> actRecords) {
+        mActRecords = actRecords;
         mContext = context;
     }
 
@@ -39,12 +39,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
 
-        // Set the name of the 'NicePlace'
-        ((ViewHolder)viewHolder).mName.setText(mNicePlaces.get(i).getTitle());
+        // Set the name of the 'ActRecord'
+        ((ViewHolder)viewHolder).mName.setText(mActRecords.get(i).getActivity() );
 
-        ((ViewHolder)viewHolder).distance.setText(mNicePlaces.get(i).getDistance());
+        ((ViewHolder)viewHolder).distance.setText( String.valueOf(mActRecords.get(i).getDistance()) + " miles");
 
-        ((ViewHolder)viewHolder).time.setText(mNicePlaces.get(i).getTime());
+        ((ViewHolder)viewHolder).time.setText(String.valueOf(mActRecords.get(i).getTime()) + " min");
 
 
         // Set the image
@@ -52,7 +52,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 .error(R.drawable.ic_launcher_background);
         Glide.with(mContext)
                 .setDefaultRequestOptions(defaultOptions)
-                .load(mNicePlaces.get(i).getImageID())
+                .load(mActRecords.get(i).getImageID())
                 .into(((ViewHolder)viewHolder).mImage);
 
 //
@@ -63,7 +63,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemCount() {
-        return mNicePlaces.size();
+        return mActRecords.size();
     }
 
     private class ViewHolder extends RecyclerView.ViewHolder{

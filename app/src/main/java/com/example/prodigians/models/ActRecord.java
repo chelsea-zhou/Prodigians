@@ -2,29 +2,29 @@ package com.example.prodigians.models;
 
 
 
-public class NicePlace {
+public class ActRecord {
 
     private String activity;
     private int imageID;
     private int time_len;
     private int distance;
 
-    public NicePlace(int imageID, String activity,int time_len,int distance) {
+    public ActRecord(int imageID, String activity, int time_len, int distance) {
         this.activity = activity;
         this.imageID = imageID;
         this.time_len = time_len;
         this.distance = distance;
     }
 
-    public NicePlace() {
+    public ActRecord() {
     }
 
 //acticity type
-    public String getTitle() {
+    public String getActivity() {
         return activity;
     }
 
-    public void setTitle(String activity) {
+    public void setActivity(String activity) {
         this.activity = activity;
     }
 
@@ -38,8 +38,8 @@ public class NicePlace {
     }
 
 //length of activity time
-    public String getTime() {
-        return String.valueOf(time_len) + " min";
+    public int getTime() {
+        return time_len;
     }
 
     public void setTime(int time_len) {
@@ -47,13 +47,16 @@ public class NicePlace {
     }
 
 //length of distance
-    public String getDistance() {
-        return String.valueOf(distance) + " miles";
+    public int getDistance() {
+        return distance;
     }
 
     public void setDistance(int distance) {
         this.distance = distance;
     }
+
+
+
 
 
 }

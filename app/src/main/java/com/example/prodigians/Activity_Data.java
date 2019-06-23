@@ -16,10 +16,9 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.example.prodigians.adapters.RecyclerAdapter;
-import com.example.prodigians.models.NicePlace;
+import com.example.prodigians.models.ActRecord;
 import com.example.prodigians.viewmodels.MainActivityViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
 import android.util.Log;
 
@@ -69,9 +68,9 @@ public class Activity_Data extends AppCompatActivity {
 
         mMainActivityViewModel.init();
 
-        mMainActivityViewModel.getNicePlaces().observe(this, new Observer<List<NicePlace>>() {
+        mMainActivityViewModel.getNicePlaces().observe(this, new Observer<List<ActRecord>>() {
             @Override
-            public void onChanged(@Nullable List<NicePlace> nicePlaces) {
+            public void onChanged(@Nullable List<ActRecord> actRecords) {
                 mAdapter.notifyDataSetChanged();
             }
         });
@@ -95,14 +94,28 @@ public class Activity_Data extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 mMainActivityViewModel.addNewValue(
-                        new NicePlace(
+                        new ActRecord(
                                 R.drawable.walk,
-                                "walk",
+                                "WALK",
                                 12,
                                 13
                         )
                 );
+                Intent intent = new Intent(Activity_Data.this, MainActivity.class);
+                Boolean fat = mMainActivityViewModel.IsFat();
+                Log.i(TAG,  String.valueOf(fat));
+                if (fat){
+
+                    intent.putExtra("message", "Fat");
+                    Log.i(TAG, " fat ");
+                }else{
+                    intent.putExtra("message", "Slim");
+                    Log.i(TAG, " slim ");
+                }
+                startActivity(intent);
+
             }
+
         });
 
         Log.v(TAG, "init recycler view");
