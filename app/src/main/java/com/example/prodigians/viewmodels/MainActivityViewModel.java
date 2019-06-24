@@ -13,18 +13,18 @@ import java.util.*;
 
 public class MainActivityViewModel extends ViewModel {
 
-    private MutableLiveData<List<ActRecord>> mNicePlaces;
+    private MutableLiveData<List<ActRecord>> mRecords;
     private ActRecordRepository mRepo;
     private MutableLiveData<Boolean> mIsUpdating = new MutableLiveData<>();
 
 
 
     public void init(){
-        if(mNicePlaces != null){
+        if(mRecords != null){
             return;
         }
         mRepo = ActRecordRepository.getInstance();
-        mNicePlaces = mRepo.getNicePlaces();
+        mRecords = mRepo.getRecords();
     }
 
 
@@ -35,9 +35,9 @@ public class MainActivityViewModel extends ViewModel {
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
-                List<ActRecord> currentPlaces = mNicePlaces.getValue();
-                currentPlaces.add(actRecord);
-                mNicePlaces.postValue(currentPlaces);
+                List<ActRecord> currentRecords = mRecords.getValue();
+                currentRecords.add(actRecord);
+                mRecords.postValue(currentRecords);
                 mIsUpdating.postValue(false);
             }
 
@@ -60,8 +60,8 @@ public class MainActivityViewModel extends ViewModel {
     }
 
 
-    public LiveData<List<ActRecord>> getNicePlaces(){
-        return mNicePlaces;
+    public LiveData<List<ActRecord>> getRecords(){
+        return mRecords;
     }
 
 

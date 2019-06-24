@@ -68,7 +68,7 @@ public class Activity_Data extends AppCompatActivity {
 
         mMainActivityViewModel.init();
 
-        mMainActivityViewModel.getNicePlaces().observe(this, new Observer<List<ActRecord>>() {
+        mMainActivityViewModel.getRecords().observe(this, new Observer<List<ActRecord>>() {
             @Override
             public void onChanged(@Nullable List<ActRecord> actRecords) {
                 mAdapter.notifyDataSetChanged();
@@ -84,7 +84,7 @@ public class Activity_Data extends AppCompatActivity {
                 else{
                     hideProgressBar();
                     Log.v(TAG, "hide progress bar");
-                    mRecyclerView.smoothScrollToPosition(mMainActivityViewModel.getNicePlaces().getValue().size()-1);
+                    mRecyclerView.smoothScrollToPosition(mMainActivityViewModel.getRecords().getValue().size()-1);
                 }
             }
         });
@@ -114,7 +114,7 @@ public class Activity_Data extends AppCompatActivity {
     }
 
     private void initRecyclerView(){
-        mAdapter = new RecyclerAdapter(this, mMainActivityViewModel.getNicePlaces().getValue());
+        mAdapter = new RecyclerAdapter(this, mMainActivityViewModel.getRecords().getValue());
         RecyclerView.LayoutManager linearLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView.setAdapter(mAdapter);

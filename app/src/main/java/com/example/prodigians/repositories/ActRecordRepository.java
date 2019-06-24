@@ -33,14 +33,14 @@ public class ActRecordRepository {
 
 
     // Pretend to get data from a webservice or online source
-    public MutableLiveData<List<ActRecord>> getNicePlaces(){
-        setNicePlaces();
+    public MutableLiveData<List<ActRecord>> getRecords(){
+        setRecords();
         MutableLiveData<List<ActRecord>> data = new MutableLiveData<>();
         data.setValue(dataSet);
         return data;
     }
 
-    private void setNicePlaces(){
+    private void setRecords(){
 //        dataSet.add(
 //                new ActRecord(R.drawable.cycle,
 //                        "Cycling",

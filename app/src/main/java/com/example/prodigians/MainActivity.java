@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
 
         mainViewModel.init();
 
-        mainViewModel.getNicePlaces().observe(this, new Observer<List<ActRecord>>() {
+        mainViewModel.getRecords().observe(this, new Observer<List<ActRecord>>() {
             @Override
             public void onChanged(@Nullable List<ActRecord> actRecords) {
                 Boolean fat = mainViewModel.IsFat();

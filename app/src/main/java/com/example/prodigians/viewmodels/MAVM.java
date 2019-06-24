@@ -13,7 +13,7 @@ import java.util.*;
 
 public class MAVM extends ViewModel {
 
-    private MutableLiveData<List<ActRecord>> mNicePlaces;
+    private MutableLiveData<List<ActRecord>> mRecords;
     private ActRecordRepository mRepo;
     static int avg_move_min = 60;
 
@@ -25,19 +25,19 @@ public class MAVM extends ViewModel {
     static int walk_factor =1;
 
     public void init(){
-        if(mNicePlaces != null){
+        if(mRecords != null){
             return;
         }
         mRepo = ActRecordRepository.getInstance();
-        mNicePlaces = mRepo.getNicePlaces();
+        mRecords = mRepo.getRecords();
     }
 
-    public LiveData<List<ActRecord>> getNicePlaces(){
-        return mNicePlaces;
+    public LiveData<List<ActRecord>> getRecords(){
+        return mRecords;
     }
 
     private int[] cal_running_avg(int days) {
-        List<ActRecord> currentRec = mNicePlaces.getValue();
+        List<ActRecord> currentRec = mRecords.getValue();
         int len = currentRec.size();
         if (len >= days) {
             List<ActRecord> last5 = currentRec.subList(len - days, len - 1);
