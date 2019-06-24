@@ -19,6 +19,7 @@
         </activity>
 
         <activity android:name=".Activity_Data"></activity>
+        <activity android:name=".Place_Data"></activity>
     </application>
 
 </manifest>

@@ -59,14 +59,16 @@ public class MainActivity extends AppCompatActivity {
                     mTextMessage.setText(R.string.title_home);
                     //return true;
                     break;
-                case R.id.navigation_dashboard:
-                    mTextMessage.setText(R.string.title_dashboard);
+                case R.id.navigation_activities:
+                    //mTextMessage.setText(R.string.title_dashboard);
                     Intent intent1 = new Intent(MainActivity.this,Activity_Data.class);
                     startActivity(intent1);
                     break;
 
-                case R.id.navigation_notifications:
-                    mTextMessage.setText(R.string.title_notifications);
+                case R.id.navigation_places:
+                    //mTextMessage.setText(R.string.title_notifications);
+                    Intent intent2 = new Intent(MainActivity.this,Place_Data.class);
+                    startActivity(intent2);
                     //return true;
                     break;
             }

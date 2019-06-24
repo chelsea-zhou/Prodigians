@@ -45,10 +45,10 @@ public class Activity_Data extends AppCompatActivity {
                     startActivity(intent1);
                     break;
                 //return true;
-                case R.id.navigation_notifications:
+                case R.id.navigation_places:
                     //mTextMessage.setText(R.string.title_notifications);
-//                    Intent intent2 = new Intent(Activity_Data.this,Notification.class);
-//                    startActivity(intent2);
+                    Intent intent2 = new Intent(Activity_Data.this,Place_Data.class);
+                    startActivity(intent2);
                     //return true;
                     break;
             }
