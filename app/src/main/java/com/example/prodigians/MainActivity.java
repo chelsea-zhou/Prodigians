@@ -20,34 +20,29 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.view.View.OnClickListener;
 
 import android.content.Intent;
-
-import android.support.constraint.ConstraintLayout;
-import android.widget.LinearLayout;
 
 import com.example.prodigians.models.ActRecord;
 import com.example.prodigians.viewmodels.MAVM;
 
 import java.util.List;
 
-import javax.security.auth.login.LoginException;
-
 public class MainActivity extends AppCompatActivity {
     private TextView mTextMessage;
     ImageView imageView;
     ImageView imageView2;
+    ImageView burgerImage;
     AnimationDrawable anima;
     Button changeButton;
     Button minusButton;
-    Button changAButton;
+    //Button changAButton;
     ObjectAnimator animation;
     ViewGroup.LayoutParams paramsInit;
     int defaultWidth = 750;
     int maxWidth = 1150;
-    int ifBackgroundChanged = 0;
+    int ifAnimating = 1;
     MAVM mainViewModel;
     static int myInt = 750;
 
@@ -58,8 +53,6 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_home);
-                    //return true;
                     break;
                 case R.id.navigation_activities:
                     //mTextMessage.setText(R.string.title_dashboard);
@@ -84,9 +77,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         addListenerOnButton();
         addListenerOnButton2();
-        addListenerOnButton3();
+        //addListenerOnButton3();
         //addListenerOnButtonImage();
         imageView = (ImageView)findViewById(R.id.image);
+        burgerImage = (ImageView) findViewById(R.id.imageBurger);
+        burgerImage.setImageResource(R.mipmap.burger2);
         paramsInit = imageView.getLayoutParams();
         imageView.setBackgroundResource(R.drawable.animation);
 
@@ -98,12 +93,7 @@ public class MainActivity extends AppCompatActivity {
         anima = (AnimationDrawable) imageView.getBackground();
         defaultWidth = imageView.getLayoutParams().width;
 
-        imageView.setOnClickListener(new OnClickListener() {
-
-            public void onClick(View view) {
-                Log.i("myapp", "image is clicked");
-            }
-        });
+        addListenerOnImageView();
 
         addListenerOnAnimation();
         animation.start();
@@ -178,6 +168,33 @@ public class MainActivity extends AppCompatActivity {
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
+    private void addListenerOnImageView() {
+        imageView.setOnClickListener(new OnClickListener() {
+
+            public void onClick(View view) {
+                if(ifAnimating == 1) {
+                    anima.stop();
+                    animation.cancel();
+                    imageView2 = (ImageView) findViewById(R.id.image);
+
+                    imageView2.setBackgroundResource(R.drawable.animation2);
+                    imageView2.setVisibility(View.VISIBLE);
+                    ifAnimating = 0;
+                }
+                else{
+//                    imageView2.setVisibility(View.INVISIBLE);
+//                    imageView = (ImageView)findViewById(R.id.image);
+//                    imageView.setBackgroundResource(R.drawable.animation);
+//                    anima = (AnimationDrawable) imageView.getBackground();
+//                    anima.start();
+//                    animation.start();
+//                    ifAnimating = 1;
+                }
+            }
+        });
+    }
+
+
     public void addListenerOnButton() {
         changeButton = (Button) findViewById(R.id.button);
         changeButton.setOnClickListener(new OnClickListener() {
@@ -206,38 +223,38 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void addListenerOnButton3() {
-        changAButton = (Button) findViewById(R.id.button3);
-        changAButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //imageView.setImageResource(R.drawable.animation2);
+//    public void addListenerOnButton3() {
+//        changAButton = (Button) findViewById(R.id.button3);
+//        changAButton.setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //imageView.setImageResource(R.drawable.animation2);
 //                animation = ObjectAnimator.ofFloat(imageView, "translationX", 450f);
 //                animation.setDuration(5000);
 //                animation.setRepeatMode(ValueAnimator.REVERSE);
 //                animation.setRepeatCount(Animation.INFINITE);
 //                anima = (AnimationDrawable) imageView.getBackground();
 //                animation.start();
-                //animation.end();
-                anima.stop();
-                animation.cancel();
-                imageView.setImageDrawable(null);
-                imageView2 = (ImageView)findViewById(R.id.image);
-                imageView2.setLayoutParams(paramsInit);
-                imageView2.requestLayout();
-
-                imageView2.setBackgroundResource(R.drawable.animation2);
-                animation = ObjectAnimator.ofFloat(imageView2, "translationX", 450f);
-
-                animation.setDuration(5000);
-                animation.setRepeatMode(ValueAnimator.REVERSE);
-                animation.setRepeatCount(Animation.INFINITE);
-                addListenerOnAnimation();
-                anima = (AnimationDrawable) imageView2.getBackground();
-                imageView2.setVisibility(View.VISIBLE);
-            }
-        });
-    }
+//                //animation.end();
+//                anima.stop();
+//                animation.cancel();
+//                imageView.setImageDrawable(null);
+//                imageView2 = (ImageView)findViewById(R.id.image);
+//                imageView2.setLayoutParams(paramsInit);
+//                imageView2.requestLayout();
+//
+//                imageView2.setBackgroundResource(R.drawable.animation2);
+//                animation = ObjectAnimator.ofFloat(imageView2, "translationX", 450f);
+//
+//                animation.setDuration(5000);
+//                animation.setRepeatMode(ValueAnimator.REVERSE);
+//                animation.setRepeatCount(Animation.INFINITE);
+//                addListenerOnAnimation();
+//                anima = (AnimationDrawable) imageView2.getBackground();
+//                imageView2.setVisibility(View.VISIBLE);
+//            }
+//        });
+//    }
 
     public void addListenerOnAnimation() {
         animation.addListener(new AnimatorListenerAdapter() {
@@ -245,6 +262,7 @@ public class MainActivity extends AppCompatActivity {
             public void onAnimationStart(Animator animation) {
                 //imageView.setImageDrawable(anima);
                 ImageView IV = (ImageView)findViewById(R.id.image);
+                IV.setVisibility(View.VISIBLE);
                 IV.animate().rotationYBy(180f);
             }
 

@@ -2,7 +2,7 @@
 <animation-list xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:drawable="@drawable/pet1"
+        android:drawable="@drawable/glasspet1"
         android:duration="150" />
 
 </animation-list>

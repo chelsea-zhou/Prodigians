@@ -2,27 +2,27 @@
 <animation-list xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:drawable="@drawable/pet1"
+        android:drawable="@drawable/glasspet1"
         android:duration="150" />
 
     <item
-        android:drawable="@drawable/pet2"
+        android:drawable="@drawable/glasspet2"
         android:duration="150" />
 
     <item
-        android:drawable="@drawable/pet3"
+        android:drawable="@drawable/glasspet3"
         android:duration="150" />
 
     <item
-        android:drawable="@drawable/pet31"
+        android:drawable="@drawable/glasspet4"
         android:duration="150" />
 
     <item
-        android:drawable="@drawable/pet41"
+        android:drawable="@drawable/glasspet5"
         android:duration="150" />
 
     <item
-        android:drawable="@drawable/pet42"
+        android:drawable="@drawable/glasspet6"
         android:duration="150" />
 
 </animation-list>
