@@ -45,9 +45,11 @@ public class MainActivity extends AppCompatActivity {
     Button changAButton;
     ObjectAnimator animation;
     ViewGroup.LayoutParams paramsInit;
-    int defaultWidth;
+    int defaultWidth = 750;
+    int maxWidth = 1150;
     int ifBackgroundChanged = 0;
     MAVM mainViewModel;
+    static int myInt = 750;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -110,22 +112,31 @@ public class MainActivity extends AppCompatActivity {
 
         mainViewModel.init();
 
+        //imageView.getLayoutParams().width = mainViewModel.getWidth();
+        Log.i("myapp",  String.valueOf(myInt));
+        imageView.getLayoutParams().width = myInt;
+
         mainViewModel.getRecords().observe(this, new Observer<List<ActRecord>>() {
             @Override
             public void onChanged(@Nullable List<ActRecord> actRecords) {
                 Boolean fat = mainViewModel.IsFat();
                 Log.i("myapp",  String.valueOf(fat));
                 if (fat){
-                    if(imageView.getLayoutParams().width >= defaultWidth) {
+                    if(myInt <= maxWidth) {
                         imageView.requestLayout();
                         imageView.getLayoutParams().width += 100;
+                        myInt += 100;
+                        //imageView.getLayoutParams().width += 100;
                         Log.i("myapp","getting fat");
+                        Log.i("myapp",String.valueOf(myInt)+"width");
+                        Log.i("myapp",String.valueOf(imageView.getLayoutParams().width)+"width");
                     }
                 }else{
 
-                    if(imageView.getLayoutParams().width >= defaultWidth) {
+                    if(myInt >= defaultWidth) {
                         imageView.requestLayout();
                         imageView.getLayoutParams().width -= 100;
+                        myInt -= 100;
                         Log.i("myapp", "getting slim ");
                     }
                 }
@@ -155,7 +166,6 @@ public class MainActivity extends AppCompatActivity {
                     imageView.getLayoutParams().width -= 20;
                     Log.i("myapp", "getting slim ");
                 }
-
             }
 
         }else{
