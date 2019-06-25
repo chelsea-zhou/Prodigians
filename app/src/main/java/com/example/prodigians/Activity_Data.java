@@ -64,6 +64,9 @@ public class Activity_Data extends AppCompatActivity {
         mRecyclerView = findViewById(R.id.recycler_view);
         mProgressBar = findViewById(R.id.progress_bar);
 
+
+
+
         mMainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
 
         mMainActivityViewModel.init();

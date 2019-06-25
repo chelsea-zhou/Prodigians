@@ -14,6 +14,11 @@ public class ActRecord {
         this.imageID = imageID;
         this.time_len = time_len;
         this.distance = distance;
+        //this.date = date;
+        //LocalDate today = LocalDate.now(); // only year, month, date
+        //int month = today.getMonthValue();
+        //get day of week
+
     }
 
     public ActRecord() {

@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.navigation_activities:
                     //mTextMessage.setText(R.string.title_dashboard);
-                    Intent intent1 = new Intent(MainActivity.this,Activity_Data.class);
+                    Intent intent1 = new Intent(MainActivity.this,Activity_Data_copied.class);
                     startActivity(intent1);
                     break;
 
