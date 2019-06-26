@@ -44,7 +44,22 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         ((ViewHolder)viewHolder).distance.setText( String.valueOf(mActRecords.get(i).getDistance()) + " miles");
 
-        ((ViewHolder)viewHolder).time.setText(String.valueOf(mActRecords.get(i).getTime()) + " min");
+        if (mActRecords.get(i).getTime() >60){
+            String fulltime;
+            fulltime = String.valueOf(mActRecords.get(i).getTime()/60) + " h ";
+            if (mActRecords.get(i).getTime()%60>0){
+                fulltime = fulltime + String.valueOf(mActRecords.get(i).getTime()%60) + " min";
+            }
+            ((ViewHolder) viewHolder).time.setText(fulltime);
+        }else {
+            ((ViewHolder) viewHolder).time.setText(String.valueOf(mActRecords.get(i).getTime()) + " min");
+        }
+
+
+        ((ViewHolder)viewHolder).exact_time.setText(mActRecords.get(i).getExactTime());
+        ((ViewHolder)viewHolder).date.setText(mActRecords.get(i).getDate());
+
+
 
 
         // Set the image
@@ -72,13 +87,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         private TextView mName;
         private TextView time;
         private TextView distance;
+        private TextView exact_time;
+        private TextView date;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             mImage = itemView.findViewById(R.id.image);
-            mName = itemView.findViewById(R.id.image_name);
-            time = itemView.findViewById(R.id.time);
+            mName = itemView.findViewById(R.id.act_type);
+            time = itemView.findViewById(R.id.time_dur);
             distance = itemView.findViewById(R.id.distance);
+            exact_time = itemView.findViewById(R.id.exact_time);
+            date = itemView.findViewById(R.id.Date);
+
 
 
         }

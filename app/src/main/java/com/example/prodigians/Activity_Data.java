@@ -71,6 +71,7 @@ public class Activity_Data extends AppCompatActivity {
         mMainActivityViewModel.getRecords().observe(this, new Observer<List<ActRecord>>() {
             @Override
             public void onChanged(@Nullable List<ActRecord> actRecords) {
+                Log.v(TAG,"notify dataset changed");
                 mAdapter.notifyDataSetChanged();
             }
         });
@@ -98,7 +99,10 @@ public class Activity_Data extends AppCompatActivity {
                                 R.drawable.walk,
                                 "WALK",
                                 12,
-                                13
+                                0.57,
+                                "Wed June 26",
+                                "10:18"
+
                         )
                 );
 

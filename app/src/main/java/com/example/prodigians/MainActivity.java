@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     int ifAnimating = 1;
     MAVM mainViewModel;
     static int myInt = 750;
+    static int data_len=1;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -77,8 +78,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         addListenerOnButton();
         addListenerOnButton2();
-        //addListenerOnButton3();
-        //addListenerOnButtonImage();
         imageView = (ImageView)findViewById(R.id.image);
         burgerImage = (ImageView) findViewById(R.id.imageBurger);
         burgerImage.setImageResource(R.mipmap.burger2);
@@ -102,65 +101,34 @@ public class MainActivity extends AppCompatActivity {
 
         mainViewModel.init();
 
-        //imageView.getLayoutParams().width = mainViewModel.getWidth();
-        Log.i("myapp",  String.valueOf(myInt));
         imageView.getLayoutParams().width = myInt;
 
         mainViewModel.getRecords().observe(this, new Observer<List<ActRecord>>() {
             @Override
             public void onChanged(@Nullable List<ActRecord> actRecords) {
-                Boolean fat = mainViewModel.IsFat();
-                Log.i("myapp",  String.valueOf(fat));
-                if (fat){
-                    if(myInt <= maxWidth) {
-                        imageView.requestLayout();
-                        imageView.getLayoutParams().width += 100;
-                        myInt += 100;
-                        //imageView.getLayoutParams().width += 100;
-                        Log.i("myapp","getting fat");
-                        Log.i("myapp",String.valueOf(myInt)+"width");
-                        Log.i("myapp",String.valueOf(imageView.getLayoutParams().width)+"width");
-                    }
-                }else{
+                if (data_len != actRecords.size()) {
+                    data_len = actRecords.size();
+                    Boolean fat = mainViewModel.IsFat();
+                    Log.i("myapp", String.valueOf(fat));
+                    if (fat) {
+                        if (myInt <= maxWidth) {
+                            myInt += 100;
+                            Log.i("myapp", "getting fat");
+                            Log.i("myapp", String.valueOf(myInt) + "width");
+                        }
+                    } else {
 
-                    if(myInt >= defaultWidth) {
-                        imageView.requestLayout();
-                        imageView.getLayoutParams().width -= 100;
-                        myInt -= 100;
-                        Log.i("myapp", "getting slim ");
+                        if (myInt >= defaultWidth) {
+                            imageView.requestLayout();
+                            imageView.getLayoutParams().width -= 100;
+                            myInt -= 100;
+                            Log.i("myapp", "getting slim ");
+                        }
                     }
                 }
             }
         });
 
-        // Getting all extras
-       // Bundle extras = getIntent().getExtras();
-        Log.i("myapp", "onCreate: ");
-        // Getting your int (second param is the default value if null)
-        String value = getIntent().getStringExtra("message");
-        if (value!=null){
-            Log.i("myapp","width: " + String.valueOf(imageView.getLayoutParams().width));
-
-            Log.i("myapp","default: " + String.valueOf(defaultWidth));
-
-            if (value=="Fat"){
-                if(imageView.getLayoutParams().width >= defaultWidth) {
-                    imageView.requestLayout();
-                    imageView.getLayoutParams().width += 20;
-                    Log.i("myapp","getting fat");
-                }
-
-            }else{
-                if(imageView.getLayoutParams().width >= defaultWidth) {
-                    imageView.requestLayout();
-                    imageView.getLayoutParams().width -= 20;
-                    Log.i("myapp", "getting slim ");
-                }
-            }
-
-        }else{
-            Log.i("myapp", "value is null ");
-        }
 
 
         BottomNavigationView navView = findViewById(R.id.nav_view);

@@ -22,11 +22,17 @@ public class ActRecordRepository {
     public static ActRecordRepository getInstance(){
         if(instance == null){
             instance = new ActRecordRepository();
-            instance.dataSet.add(
-                    new ActRecord(R.drawable.cycle,
-                            "Cycling",
-                            12,
-                            13));
+            instance.setRecords();
+//            instance.dataSet.add(
+//                    new ActRecord(
+//                            R.drawable.walk,
+//                            "WALK",
+//                            12,
+//                            0.57,
+//                            "Wed June 26",
+//                            "10:18"
+//
+//                    ));
         }
         return instance;
     }
@@ -34,19 +40,76 @@ public class ActRecordRepository {
 
     // Pretend to get data from a webservice or online source
     public MutableLiveData<List<ActRecord>> getRecords(){
-        setRecords();
+        //setRecords();
         MutableLiveData<List<ActRecord>> data = new MutableLiveData<>();
         data.setValue(dataSet);
         return data;
     }
 
     private void setRecords(){
-//        dataSet.add(
-//                new ActRecord(R.drawable.cycle,
-//                        "Cycling",
-//                        12,
-//                        13)
-////        );
+        dataSet.add(
+                    new ActRecord(
+                            R.drawable.walk,
+                            "Walk",
+                            12,
+                            0.57,
+                            "Today",
+                            "09:18 AM"
+
+                    ));
+        dataSet.add(
+                new ActRecord(
+                        R.drawable.still,
+                        "Still",
+                        53,
+                        0.57,
+                        "Today",
+                        "09:37 AM"
+
+                ));
+        dataSet.add(
+                new ActRecord(
+                        R.drawable.cycle,
+                        "Bike",
+                        5,
+                        0.6,
+                        "Today",
+                        "10:45 AM"
+
+                ));
+        dataSet.add(
+                new ActRecord(
+                        R.drawable.walk,
+                        "Walk",
+                        15,
+                        0.65,
+                        "Yesterday",
+                        "10:37 PM"
+
+                ));
+
+        dataSet.add(
+                new ActRecord(
+                        R.drawable.walk,
+                        "Walk",
+                        17,
+                        0.68,
+                        "Yesterday",
+                        "07:14 PM"
+
+                ));
+
+
+        dataSet.add(
+                new ActRecord(
+                        R.drawable.still,
+                        "Still",
+                        172,
+                        0.57,
+                        "Yesterday",
+                        "04:02 PM"
+
+                ));
 //        dataSet.add(
 //                new ActRecord("https://i.redd.it/tpsnoz5bzo501.jpg",
 //                        "Trondheim")
