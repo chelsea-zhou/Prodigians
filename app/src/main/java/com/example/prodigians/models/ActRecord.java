@@ -7,13 +7,18 @@ public class ActRecord {
     private String activity;
     private int imageID;
     private int time_len;
-    private int distance;
+    private double distance;
+    private String exact_time;
+    private String date;
 
-    public ActRecord(int imageID, String activity, int time_len, int distance) {
+    public ActRecord(int imageID, String activity, int time_len, double distance,String date,String exact_time) {
         this.activity = activity;
         this.imageID = imageID;
         this.time_len = time_len;
         this.distance = distance;
+        this.exact_time = exact_time;
+        this.date = date;
+
     }
 
     public ActRecord() {
@@ -47,7 +52,7 @@ public class ActRecord {
     }
 
 //length of distance
-    public int getDistance() {
+    public double getDistance() {
         return distance;
     }
 
@@ -55,8 +60,10 @@ public class ActRecord {
         this.distance = distance;
     }
 
-
-
-
-
+    public String getExactTime() {
+        return exact_time;
+    }
+    public String getDate() {
+        return date;
+    }
 }

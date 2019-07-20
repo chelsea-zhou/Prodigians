@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
     int screenDensity;
     MAVM mainViewModel;
     static int myInt = 750;
+    static int data_len=1;
     //if video recording starts
     boolean ifStarted = false;
     String direction = "left";
@@ -125,19 +126,17 @@ public class MainActivity extends AppCompatActivity {
         mainViewModel.getRecords().observe(this, new Observer<List<ActRecord>>() {
             @Override
             public void onChanged(@Nullable List<ActRecord> actRecords) {
-                Boolean fat = mainViewModel.IsFat();
-                Log.i("myapp",  String.valueOf(fat));
-                if (fat){
-                    if(myInt <= maxWidth) {
-                        imageView.requestLayout();
-                        imageView.getLayoutParams().width += 100;
-                        myInt += 100;
-                        //imageView.getLayoutParams().width += 100;
-                        Log.i("myapp","getting fat");
-                        Log.i("myapp",String.valueOf(myInt)+"width");
-                        Log.i("myapp",String.valueOf(imageView.getLayoutParams().width)+"width");
-                    }
-                }else{
+                if (data_len != actRecords.size()) {
+                    data_len = actRecords.size();
+                    Boolean fat = mainViewModel.IsFat();
+                    Log.i("myapp", String.valueOf(fat));
+                    if (fat) {
+                        if (myInt <= maxWidth) {
+                            myInt += 100;
+                            Log.i("myapp", "getting fat");
+                            Log.i("myapp", String.valueOf(myInt) + "width");
+                        }
+                    } else {
 
                     if(myInt >= defaultWidth) {
                         imageView.requestLayout();
@@ -149,34 +148,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Getting all extras
-       // Bundle extras = getIntent().getExtras();
-        Log.i("myapp", "onCreate: ");
-        // Getting your int (second param is the default value if null)
-        String value = getIntent().getStringExtra("message");
-        if (value!=null){
-            Log.i("myapp","width: " + String.valueOf(imageView.getLayoutParams().width));
-
-            Log.i("myapp","default: " + String.valueOf(defaultWidth));
-
-            if (value=="Fat"){
-                if(imageView.getLayoutParams().width >= defaultWidth) {
-                    imageView.requestLayout();
-                    imageView.getLayoutParams().width += 20;
-                    Log.i("myapp","getting fat");
-                }
-
-            }else{
-                if(imageView.getLayoutParams().width >= defaultWidth) {
-                    imageView.requestLayout();
-                    imageView.getLayoutParams().width -= 20;
-                    Log.i("myapp", "getting slim ");
-                }
-            }
-
-        }else{
-            Log.i("myapp", "value is null ");
-        }
 
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
@@ -263,6 +234,8 @@ public class MainActivity extends AppCompatActivity {
                     anima.start();
                     animation.start();
 
+                    imageView2.setBackgroundResource(R.drawable.animation2);
+                    imageView2.setVisibility(View.VISIBLE);
                     ifAnimating = 0;
                 }
                 else{
@@ -307,6 +280,38 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+//    public void addListenerOnButton3() {
+//        changAButton = (Button) findViewById(R.id.button3);
+//        changAButton.setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //imageView.setImageResource(R.drawable.animation2);
+//                animation = ObjectAnimator.ofFloat(imageView, "translationX", 450f);
+//                animation.setDuration(5000);
+//                animation.setRepeatMode(ValueAnimator.REVERSE);
+//                animation.setRepeatCount(Animation.INFINITE);
+//                anima = (AnimationDrawable) imageView.getBackground();
+//                animation.start();
+//                //animation.end();
+//                anima.stop();
+//                animation.cancel();
+//                imageView.setImageDrawable(null);
+//                imageView2 = (ImageView)findViewById(R.id.image);
+//                imageView2.setLayoutParams(paramsInit);
+//                imageView2.requestLayout();
+//
+//                imageView2.setBackgroundResource(R.drawable.animation2);
+//                animation = ObjectAnimator.ofFloat(imageView2, "translationX", 450f);
+//
+//                animation.setDuration(5000);
+//                animation.setRepeatMode(ValueAnimator.REVERSE);
+//                animation.setRepeatCount(Animation.INFINITE);
+//                addListenerOnAnimation();
+//                anima = (AnimationDrawable) imageView2.getBackground();
+//                imageView2.setVisibility(View.VISIBLE);
+//            }
+//        });
+//    }
 
     public void addListenerOnAnimation() {
         animation.addListener(new AnimatorListenerAdapter() {
@@ -336,28 +341,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void addListenerOnPopupButton() {
-        minusButton = (Button) findViewById(R.id.button3);
-        minusButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                LayoutInflater inflater = (LayoutInflater)getSystemService(LAYOUT_INFLATER_SERVICE);
-                View popupView = inflater.inflate(R.layout.popup_window, null);
-                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-                boolean focusable = true;
-                final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
-                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
-                popupView.setOnTouchListener(new View.OnTouchListener() {
-                    @Override
-                    public boolean onTouch(View v, MotionEvent event) {
-                        popupWindow.dismiss();
-                        return true;
-                    }
-                });
-            }
-        });
-    }
+//    public void addListenerOnButtonImage() {
+//        minusButton = (Button) findViewById(R.id.button3);
+//        minusButton.setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                ConstraintLayout layout =(ConstraintLayout)findViewById(R.id.container);
+//                if(ifBackgroundChanged == 0) {
+//                    layout.setBackgroundResource(R.mipmap.restaurant);
+//                    ifBackgroundChanged = 1;
+//                }
+//                else {
+//                    layout.setBackgroundResource(R.mipmap.library);
+//                    ifBackgroundChanged = 0;
+//                }
+//            }
+//        });
+//    }
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus){

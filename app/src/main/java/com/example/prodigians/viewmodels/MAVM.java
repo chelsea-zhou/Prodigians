@@ -15,7 +15,7 @@ public class MAVM extends ViewModel {
 
     private MutableLiveData<List<ActRecord>> mRecords;
     private ActRecordRepository mRepo;
-    static int avg_move_min = 60;
+    static int avg_move_min = 30;
 
     // only walk, run, cycle counts, later can be more fine grained, like measure the speed of wheel to get heart points
     static int avg_hrt_point= 10;
@@ -49,7 +49,7 @@ public class MAVM extends ViewModel {
                 ActRecord ar = iterator.next();
 
                 String act = ar.getActivity();
-                int dist = ar.getDistance();
+                double dist = ar.getDistance();
 
                 if (act=="WALKING"){
                     total_hrt_pt += dist * 10;
