@@ -1,17 +1,30 @@
 package com.example.prodigians.adapters;
 
+import android.arch.lifecycle.MutableLiveData;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.prodigians.R;
+import com.example.prodigians.models.ActRecord;
 import com.example.prodigians.models.PlaceRecord;
+import com.example.prodigians.viewmodels.PlaceActivityViewModel;
+
+import android.view.View.OnClickListener;
+import android.support.v7.widget.RecyclerView;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +44,51 @@ public class PlaceAdapter  extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_listitem2, viewGroup, false);
+        view.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+                View popupView = inflater.inflate(R.layout.popup_window, null);
+
+//                RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+//
+//                MutableLiveData<List<ActRecord>> data = new MutableLiveData<>();
+//                ArrayList<ActRecord> dataSet = new ArrayList<>();
+//                dataSet.add(
+//                        new ActRecord(R.drawable.cycle,
+//                                "Cycling",
+//                                12,
+//                                13));
+//
+//                data.setValue(dataSet);
+//                RecyclerAdapter mAdapter;
+//                mAdapter = new RecyclerAdapter(mContext,dataSet);
+//                RecyclerView.LayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
+//                mRecyclerView.setLayoutManager(linearLayoutManager);
+//                mRecyclerView.setAdapter(mAdapter);
+
+
+
+
+                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+                boolean focusable = true; // lets taps outside the popup also dismiss it
+                final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+
+                TextView popupText = popupView.findViewById(R.id.popupWind);
+                //popupText.setText(String.valueOf(mPlaceRecords.get(0).getPlace()));
+                popupText.setText("DC     50 min\nMC     25 min");
+                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+                popupView.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        popupWindow.dismiss();
+                        return true;
+                    }
+                });
+            }
+        });
         ViewHolder vh = new ViewHolder(view);
         return vh;
     }

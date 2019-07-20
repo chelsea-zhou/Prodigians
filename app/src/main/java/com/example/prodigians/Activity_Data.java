@@ -120,6 +120,8 @@ public class Activity_Data extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
     }
 
+
+
     private void showProgressBar(){
         mProgressBar.setVisibility(View.VISIBLE);
     }

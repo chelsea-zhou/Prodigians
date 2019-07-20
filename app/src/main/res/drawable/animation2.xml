@@ -4,5 +4,8 @@
     <item
         android:drawable="@drawable/glasspet1"
         android:duration="150" />
+    <item
+        android:drawable="@drawable/glasspet2"
+        android:duration="150" />
 
 </animation-list>

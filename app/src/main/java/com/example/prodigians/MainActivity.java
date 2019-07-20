@@ -21,11 +21,21 @@ import android.widget.TextView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.LayoutInflater;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.view.Gravity;
+import android.view.MotionEvent;
+import android.media.projection.MediaProjectionManager;
+import android.util.DisplayMetrics;
+import android.content.Context;
 
 import android.content.Intent;
 
 import com.example.prodigians.models.ActRecord;
 import com.example.prodigians.viewmodels.MAVM;
+import com.example.prodigians.models.RecordService;
+
 
 import java.util.List;
 
@@ -37,14 +47,20 @@ public class MainActivity extends AppCompatActivity {
     AnimationDrawable anima;
     Button changeButton;
     Button minusButton;
-    //Button changAButton;
+    Button RecordButton;
     ObjectAnimator animation;
     ViewGroup.LayoutParams paramsInit;
     int defaultWidth = 750;
     int maxWidth = 1150;
     int ifAnimating = 1;
+    int screenWidth;
+    int screenHeight;
+    int screenDensity;
     MAVM mainViewModel;
     static int myInt = 750;
+    //if video recording starts
+    boolean ifStarted = false;
+    String direction = "left";
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -77,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         addListenerOnButton();
         addListenerOnButton2();
-        //addListenerOnButton3();
+        addListenerOnPopupButton();
         //addListenerOnButtonImage();
         imageView = (ImageView)findViewById(R.id.image);
         burgerImage = (ImageView) findViewById(R.id.imageBurger);
@@ -166,7 +182,70 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView navView = findViewById(R.id.nav_view);
         mTextMessage = findViewById(R.id.message);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        //get screen information
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        screenWidth = dm.widthPixels;
+        screenHeight = dm.heightPixels;
+        screenDensity = dm.densityDpi;
+        capture();
     }
+
+
+    private void capture() {
+        RecordButton = (Button) findViewById(R.id.buttonVideo);
+        if(ifStarted) {
+            //change recording button text when recording starts
+            RecordButton.setText("Stop");
+        } else {
+            //change recording button text when recording ends
+            RecordButton.setText("Start");
+        }
+        RecordButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ifStarted) {
+                    RecordButton.setText("Start");
+                    stopRecording();
+                } else {
+                    MediaProjectionManager mpm = (MediaProjectionManager) getSystemService(Context.MEDIA_PROJECTION_SERVICE);
+                    Intent I = mpm.createScreenCaptureIntent();
+                    startActivityForResult(I, 1);
+                }
+            }
+        });
+    }
+
+    private void stopRecording() {
+        Intent I = new Intent(this, RecordService.class);
+        stopService(I);
+        ifStarted = !ifStarted;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == 1) {
+            // get permissions and start service to start recording
+            Intent i = new Intent(this, RecordService.class);
+            i.putExtra("code", resultCode);
+            i.putExtra("data", data);
+            i.putExtra("width", screenWidth);
+            i.putExtra("height", screenHeight);
+            i.putExtra("density", screenDensity);
+            //start recording
+            startService(i);
+            ifStarted = !ifStarted;
+            RecordButton.setText("Stop");
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean("record status", ifStarted);
+    }
+
+    /////////////////////////////////
 
     private void addListenerOnImageView() {
         imageView.setOnClickListener(new OnClickListener() {
@@ -174,11 +253,16 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(ifAnimating == 1) {
                     anima.stop();
+                    anima.setVisible(false, true);
                     animation.cancel();
-                    imageView2 = (ImageView) findViewById(R.id.image);
+                    imageView = (ImageView) findViewById(R.id.image);
+                    paramsInit = imageView.getLayoutParams();
+                    imageView.setBackgroundResource(R.drawable.animation2);
+                    imageView.setVisibility(View.VISIBLE);
+                    anima = (AnimationDrawable) imageView.getBackground();
+                    anima.start();
+                    animation.start();
 
-                    imageView2.setBackgroundResource(R.drawable.animation2);
-                    imageView2.setVisibility(View.VISIBLE);
                     ifAnimating = 0;
                 }
                 else{
@@ -223,38 +307,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-//    public void addListenerOnButton3() {
-//        changAButton = (Button) findViewById(R.id.button3);
-//        changAButton.setOnClickListener(new OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                //imageView.setImageResource(R.drawable.animation2);
-//                animation = ObjectAnimator.ofFloat(imageView, "translationX", 450f);
-//                animation.setDuration(5000);
-//                animation.setRepeatMode(ValueAnimator.REVERSE);
-//                animation.setRepeatCount(Animation.INFINITE);
-//                anima = (AnimationDrawable) imageView.getBackground();
-//                animation.start();
-//                //animation.end();
-//                anima.stop();
-//                animation.cancel();
-//                imageView.setImageDrawable(null);
-//                imageView2 = (ImageView)findViewById(R.id.image);
-//                imageView2.setLayoutParams(paramsInit);
-//                imageView2.requestLayout();
-//
-//                imageView2.setBackgroundResource(R.drawable.animation2);
-//                animation = ObjectAnimator.ofFloat(imageView2, "translationX", 450f);
-//
-//                animation.setDuration(5000);
-//                animation.setRepeatMode(ValueAnimator.REVERSE);
-//                animation.setRepeatCount(Animation.INFINITE);
-//                addListenerOnAnimation();
-//                anima = (AnimationDrawable) imageView2.getBackground();
-//                imageView2.setVisibility(View.VISIBLE);
-//            }
-//        });
-//    }
 
     public void addListenerOnAnimation() {
         animation.addListener(new AnimatorListenerAdapter() {
@@ -263,12 +315,16 @@ public class MainActivity extends AppCompatActivity {
                 //imageView.setImageDrawable(anima);
                 ImageView IV = (ImageView)findViewById(R.id.image);
                 IV.setVisibility(View.VISIBLE);
-                IV.animate().rotationYBy(180f);
+                if(direction == "left") {
+                    IV.animate().rotationYBy(180f);
+                    direction = "right";
+                }
             }
 
             public void onAnimationRepeat(Animator animation) {
                 ImageView IV = (ImageView)findViewById(R.id.image);
                 IV.animate().rotationYBy(180f);
+                direction = "left";
             }
 
             public void onAnimationEnd(Animator animation) {
@@ -280,23 +336,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-//    public void addListenerOnButtonImage() {
-//        minusButton = (Button) findViewById(R.id.button3);
-//        minusButton.setOnClickListener(new OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                ConstraintLayout layout =(ConstraintLayout)findViewById(R.id.container);
-//                if(ifBackgroundChanged == 0) {
-//                    layout.setBackgroundResource(R.mipmap.restaurant);
-//                    ifBackgroundChanged = 1;
-//                }
-//                else {
-//                    layout.setBackgroundResource(R.mipmap.library);
-//                    ifBackgroundChanged = 0;
-//                }
-//            }
-//        });
-//    }
+    public void addListenerOnPopupButton() {
+        minusButton = (Button) findViewById(R.id.button3);
+        minusButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LayoutInflater inflater = (LayoutInflater)getSystemService(LAYOUT_INFLATER_SERVICE);
+                View popupView = inflater.inflate(R.layout.popup_window, null);
+                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+                boolean focusable = true;
+                final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+                popupView.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        popupWindow.dismiss();
+                        return true;
+                    }
+                });
+            }
+        });
+    }
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus){
