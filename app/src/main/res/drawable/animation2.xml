@@ -7,5 +7,18 @@
     <item
         android:drawable="@drawable/glasspet2"
         android:duration="150" />
+    <item
+        android:drawable="@drawable/glasspet3"
+        android:duration="150" />
+    <item
+        android:drawable="@drawable/glasspet4"
+        android:duration="150" />
+    <item
+        android:drawable="@drawable/glasspet5"
+        android:duration="150" />
+    <item
+        android:drawable="@drawable/glasspet6"
+        android:duration="150" />
+
 
 </animation-list>

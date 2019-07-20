@@ -5,4 +5,6 @@
     <string name="title_notifications">Notifications</string>
     <string name="title_activity">Activities</string>
     <string name="title_places">Places</string>
+    <string name="facebook_app_id">675986516210428</string>
+    <string name="facebook_login_protocol_scheme">fb675986516210428</string>
 </resources>

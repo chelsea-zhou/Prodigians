@@ -21,26 +21,30 @@ import android.widget.TextView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
-import android.view.LayoutInflater;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
-import android.view.Gravity;
-import android.view.MotionEvent;
 import android.media.projection.MediaProjectionManager;
 import android.util.DisplayMetrics;
 import android.content.Context;
+import android.net.Uri;
 
 import android.content.Intent;
 
 import com.example.prodigians.models.ActRecord;
 import com.example.prodigians.viewmodels.MAVM;
 import com.example.prodigians.models.RecordService;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookSdk;
+import com.facebook.share.model.ShareVideo;
+import com.facebook.share.model.ShareVideoContent;
+import com.facebook.share.widget.ShareDialog;
 
 
+import java.security.MessageDigest;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private TextView mTextMessage;
+    CallbackManager cm;
+    ShareDialog sd;
     ImageView imageView;
     ImageView imageView2;
     ImageView burgerImage;
@@ -48,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
     Button changeButton;
     Button minusButton;
     Button RecordButton;
+    Button ShareButton;
     ObjectAnimator animation;
     ViewGroup.LayoutParams paramsInit;
     int defaultWidth = 750;
@@ -92,9 +97,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //printKeyHash();
         addListenerOnButton();
         addListenerOnButton2();
+        addListenerOnShareButton();
         //addListenerOnButtonImage();
+        FacebookSdk.sdkInitialize(this.getApplicationContext());
+
+        //init facebook
+        cm = CallbackManager.Factory.create();
+        sd = new ShareDialog(this);
+
+
         imageView = (ImageView)findViewById(R.id.image);
         burgerImage = (ImageView) findViewById(R.id.imageBurger);
         burgerImage.setImageResource(R.mipmap.burger2);
@@ -187,7 +201,21 @@ public class MainActivity extends AppCompatActivity {
         screenHeight = dm.heightPixels;
         screenDensity = dm.densityDpi;
         capture();
+
     }
+
+//    private void printKeyHash(){
+//        try{
+//            PackageInfo info = getPackageManager().getPackageInfo("com.example.prodigians", PackageManager.GET_SIGNATURES);
+//            for(Signature signature:info.signatures){
+//                MessageDigest md = MessageDigest.getInstance("SHA");
+//                md.update(signature.toByteArray());
+//                Log.i("myapp", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+//            }
+//        } catch(Exception e){
+//            e.printStackTrace();
+//        }
+//    }
 
     private void capture() {
         RecordButton = (Button) findViewById(R.id.buttonVideo);
@@ -196,13 +224,13 @@ public class MainActivity extends AppCompatActivity {
             RecordButton.setText("Stop");
         } else {
             //change recording button text when recording ends
-            RecordButton.setText("Start");
+            RecordButton.setText("Record");
         }
         RecordButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(ifStarted) {
-                    RecordButton.setText("Start");
+                    RecordButton.setText("Record");
                     stopRecording();
                 } else {
                     MediaProjectionManager mpm = (MediaProjectionManager) getSystemService(Context.MEDIA_PROJECTION_SERVICE);
@@ -233,6 +261,14 @@ public class MainActivity extends AppCompatActivity {
             startService(i);
             ifStarted = !ifStarted;
             RecordButton.setText("Stop");
+        }
+        else if(requestCode == 1000){
+            Uri selectVideo = data.getData();
+            ShareVideo video = new ShareVideo.Builder().setLocalUrl(selectVideo).build();
+            ShareVideoContent svc = new ShareVideoContent.Builder().setContentTitle("pet").setContentDescription("pet video").setVideo(video).build();
+            if(sd.canShow(ShareVideoContent.class)){
+                sd.show(svc);
+            }
         }
     }
 
@@ -273,6 +309,18 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void addListenerOnShareButton() {
+        ShareButton = (Button) findViewById(R.id.buttonShare);
+        ShareButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent();
+                i.setType("video/*");
+                i.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(i, "select"), 1000);
+            }
+        });
+    }
 
     public void addListenerOnButton() {
         changeButton = (Button) findViewById(R.id.button);
