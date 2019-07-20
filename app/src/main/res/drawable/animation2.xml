@@ -2,22 +2,22 @@
 <animation-list xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:drawable="@drawable/glasspet1"
+        android:drawable="@drawable/cryglasspet1"
         android:duration="150" />
     <item
-        android:drawable="@drawable/glasspet2"
+        android:drawable="@drawable/cryglasspet2"
         android:duration="150" />
     <item
-        android:drawable="@drawable/glasspet3"
+        android:drawable="@drawable/cryglasspet3"
         android:duration="150" />
     <item
-        android:drawable="@drawable/glasspet4"
+        android:drawable="@drawable/cryglasspet4"
         android:duration="150" />
     <item
-        android:drawable="@drawable/glasspet5"
+        android:drawable="@drawable/cryglasspet5"
         android:duration="150" />
     <item
-        android:drawable="@drawable/glasspet6"
+        android:drawable="@drawable/cryglasspet6"
         android:duration="150" />
 
 

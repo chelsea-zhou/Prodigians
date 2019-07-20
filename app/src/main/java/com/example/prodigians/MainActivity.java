@@ -6,6 +6,7 @@ import android.animation.ValueAnimator;
 import android.animation.AnimatorListenerAdapter;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.animation.Animation;
@@ -46,11 +47,8 @@ public class MainActivity extends AppCompatActivity {
     CallbackManager cm;
     ShareDialog sd;
     ImageView imageView;
-    ImageView imageView2;
     ImageView burgerImage;
     AnimationDrawable anima;
-    Button changeButton;
-    Button minusButton;
     Button RecordButton;
     Button ShareButton;
     ObjectAnimator animation;
@@ -97,11 +95,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //printKeyHash();
-        addListenerOnButton();
-        addListenerOnButton2();
         addListenerOnShareButton();
-        //addListenerOnButtonImage();
         FacebookSdk.sdkInitialize(this.getApplicationContext());
 
         //init facebook
@@ -146,8 +140,6 @@ public class MainActivity extends AppCompatActivity {
                     if (fat) {
                         if (myInt <= maxWidth) {
                             myInt += 100;
-                            Log.i("myapp", "getting fat");
-                            Log.i("myapp", String.valueOf(myInt) + "width");
                         }
                     } else {
 
@@ -155,34 +147,24 @@ public class MainActivity extends AppCompatActivity {
                         imageView.requestLayout();
                         imageView.getLayoutParams().width -= 100;
                         myInt -= 100;
-                        Log.i("myapp", "getting slim ");
                     }
                 }
             }
         }});
 
-        // Getting all extras
-       // Bundle extras = getIntent().getExtras();
-        Log.i("myapp", "onCreate: ");
-        // Getting your int (second param is the default value if null)
         String value = getIntent().getStringExtra("message");
         if (value!=null){
-            Log.i("myapp","width: " + String.valueOf(imageView.getLayoutParams().width));
-
-            Log.i("myapp","default: " + String.valueOf(defaultWidth));
 
             if (value=="Fat"){
                 if(imageView.getLayoutParams().width >= defaultWidth) {
                     imageView.requestLayout();
                     imageView.getLayoutParams().width += 20;
-                    Log.i("myapp","getting fat");
                 }
 
             }else{
                 if(imageView.getLayoutParams().width >= defaultWidth) {
                     imageView.requestLayout();
                     imageView.getLayoutParams().width -= 20;
-                    Log.i("myapp", "getting slim ");
                 }
             }
 
@@ -201,36 +183,25 @@ public class MainActivity extends AppCompatActivity {
         screenHeight = dm.heightPixels;
         screenDensity = dm.densityDpi;
         capture();
-
     }
-
-//    private void printKeyHash(){
-//        try{
-//            PackageInfo info = getPackageManager().getPackageInfo("com.example.prodigians", PackageManager.GET_SIGNATURES);
-//            for(Signature signature:info.signatures){
-//                MessageDigest md = MessageDigest.getInstance("SHA");
-//                md.update(signature.toByteArray());
-//                Log.i("myapp", Base64.encodeToString(md.digest(), Base64.DEFAULT));
-//            }
-//        } catch(Exception e){
-//            e.printStackTrace();
-//        }
-//    }
 
     private void capture() {
         RecordButton = (Button) findViewById(R.id.buttonVideo);
         if(ifStarted) {
             //change recording button text when recording starts
             RecordButton.setText("Stop");
+            RecordButton.setBackgroundColor(Color.RED);
         } else {
             //change recording button text when recording ends
             RecordButton.setText("Record");
+            RecordButton.setBackgroundColor(Color.WHITE);
         }
         RecordButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(ifStarted) {
                     RecordButton.setText("Record");
+                    RecordButton.setBackgroundColor(Color.WHITE);
                     stopRecording();
                 } else {
                     MediaProjectionManager mpm = (MediaProjectionManager) getSystemService(Context.MEDIA_PROJECTION_SERVICE);
@@ -261,6 +232,7 @@ public class MainActivity extends AppCompatActivity {
             startService(i);
             ifStarted = !ifStarted;
             RecordButton.setText("Stop");
+            RecordButton.setBackgroundColor(Color.RED);
         }
         else if(requestCode == 1000){
             Uri selectVideo = data.getData();
@@ -297,13 +269,18 @@ public class MainActivity extends AppCompatActivity {
                     ifAnimating = 0;
                 }
                 else{
-//                    imageView2.setVisibility(View.INVISIBLE);
-//                    imageView = (ImageView)findViewById(R.id.image);
-//                    imageView.setBackgroundResource(R.drawable.animation);
-//                    anima = (AnimationDrawable) imageView.getBackground();
-//                    anima.start();
-//                    animation.start();
-//                    ifAnimating = 1;
+                    anima.stop();
+                    anima.setVisible(false, true);
+                    animation.cancel();
+                    imageView = (ImageView) findViewById(R.id.image);
+                    paramsInit = imageView.getLayoutParams();
+                    imageView.setBackgroundResource(R.drawable.animation);
+                    imageView.setVisibility(View.VISIBLE);
+                    anima = (AnimationDrawable) imageView.getBackground();
+                    anima.start();
+                    animation.start();
+
+                    ifAnimating = 1;
                 }
             }
         });
@@ -322,67 +299,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void addListenerOnButton() {
-        changeButton = (Button) findViewById(R.id.button);
-        changeButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ImageView imageView = (ImageView)findViewById(R.id.image);
-                if(imageView.getLayoutParams().width < defaultWidth+400) {
-                    imageView.requestLayout();
-                    imageView.getLayoutParams().width += 20;
-                }
-            }
-        });
-    }
-
-    public void addListenerOnButton2() {
-        minusButton = (Button) findViewById(R.id.button2);
-        minusButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ImageView imageView = (ImageView)findViewById(R.id.image);
-                if(imageView.getLayoutParams().width > defaultWidth) {
-                    imageView.requestLayout();
-                    imageView.getLayoutParams().width -= 20;
-                }
-            }
-        });
-    }
-
-//    public void addListenerOnButton3() {
-//        changAButton = (Button) findViewById(R.id.button3);
-//        changAButton.setOnClickListener(new OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                //imageView.setImageResource(R.drawable.animation2);
-//                animation = ObjectAnimator.ofFloat(imageView, "translationX", 450f);
-//                animation.setDuration(5000);
-//                animation.setRepeatMode(ValueAnimator.REVERSE);
-//                animation.setRepeatCount(Animation.INFINITE);
-//                anima = (AnimationDrawable) imageView.getBackground();
-//                animation.start();
-//                //animation.end();
-//                anima.stop();
-//                animation.cancel();
-//                imageView.setImageDrawable(null);
-//                imageView2 = (ImageView)findViewById(R.id.image);
-//                imageView2.setLayoutParams(paramsInit);
-//                imageView2.requestLayout();
-//
-//                imageView2.setBackgroundResource(R.drawable.animation2);
-//                animation = ObjectAnimator.ofFloat(imageView2, "translationX", 450f);
-//
-//                animation.setDuration(5000);
-//                animation.setRepeatMode(ValueAnimator.REVERSE);
-//                animation.setRepeatCount(Animation.INFINITE);
-//                addListenerOnAnimation();
-//                anima = (AnimationDrawable) imageView2.getBackground();
-//                imageView2.setVisibility(View.VISIBLE);
-//            }
-//        });
-//    }
-
     public void addListenerOnAnimation() {
         animation.addListener(new AnimatorListenerAdapter() {
             @Override
@@ -399,35 +315,20 @@ public class MainActivity extends AppCompatActivity {
             public void onAnimationRepeat(Animator animation) {
                 ImageView IV = (ImageView)findViewById(R.id.image);
                 IV.animate().rotationYBy(180f);
-                direction = "left";
+                if(direction == "left") {
+                    direction = "right";
+                }
+                else{
+                    direction = "left";
+                }
             }
 
             public void onAnimationEnd(Animator animation) {
                 ImageView IV = (ImageView)findViewById(R.id.image);
                 IV.setVisibility(View.INVISIBLE);
             }
-
         });
     }
-
-
-//    public void addListenerOnButtonImage() {
-//        minusButton = (Button) findViewById(R.id.button3);
-//        minusButton.setOnClickListener(new OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                ConstraintLayout layout =(ConstraintLayout)findViewById(R.id.container);
-//                if(ifBackgroundChanged == 0) {
-//                    layout.setBackgroundResource(R.mipmap.restaurant);
-//                    ifBackgroundChanged = 1;
-//                }
-//                else {
-//                    layout.setBackgroundResource(R.mipmap.library);
-//                    ifBackgroundChanged = 0;
-//                }
-//            }
-//        });
-//    }
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus){
