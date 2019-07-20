@@ -94,7 +94,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         addListenerOnButton();
         addListenerOnButton2();
-        addListenerOnPopupButton();
         //addListenerOnButtonImage();
         imageView = (ImageView)findViewById(R.id.image);
         burgerImage = (ImageView) findViewById(R.id.imageBurger);
@@ -146,8 +145,36 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             }
-        });
+        }});
 
+        // Getting all extras
+       // Bundle extras = getIntent().getExtras();
+        Log.i("myapp", "onCreate: ");
+        // Getting your int (second param is the default value if null)
+        String value = getIntent().getStringExtra("message");
+        if (value!=null){
+            Log.i("myapp","width: " + String.valueOf(imageView.getLayoutParams().width));
+
+            Log.i("myapp","default: " + String.valueOf(defaultWidth));
+
+            if (value=="Fat"){
+                if(imageView.getLayoutParams().width >= defaultWidth) {
+                    imageView.requestLayout();
+                    imageView.getLayoutParams().width += 20;
+                    Log.i("myapp","getting fat");
+                }
+
+            }else{
+                if(imageView.getLayoutParams().width >= defaultWidth) {
+                    imageView.requestLayout();
+                    imageView.getLayoutParams().width -= 20;
+                    Log.i("myapp", "getting slim ");
+                }
+            }
+
+        }else{
+            Log.i("myapp", "value is null ");
+        }
 
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
@@ -161,7 +188,6 @@ public class MainActivity extends AppCompatActivity {
         screenDensity = dm.densityDpi;
         capture();
     }
-
 
     private void capture() {
         RecordButton = (Button) findViewById(R.id.buttonVideo);
@@ -216,8 +242,6 @@ public class MainActivity extends AppCompatActivity {
         outState.putBoolean("record status", ifStarted);
     }
 
-    /////////////////////////////////
-
     private void addListenerOnImageView() {
         imageView.setOnClickListener(new OnClickListener() {
 
@@ -234,8 +258,6 @@ public class MainActivity extends AppCompatActivity {
                     anima.start();
                     animation.start();
 
-                    imageView2.setBackgroundResource(R.drawable.animation2);
-                    imageView2.setVisibility(View.VISIBLE);
                     ifAnimating = 0;
                 }
                 else{
@@ -364,5 +386,4 @@ public class MainActivity extends AppCompatActivity {
         super.onWindowFocusChanged(hasFocus);
         anima.start();
     }
-
 }
