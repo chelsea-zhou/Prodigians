@@ -61,6 +61,22 @@ public class ActRecordRepository implements Observer{
         // get reference to livedata
         mrecords = activity.getRecords();
 
+
+    }
+
+    public ArrayList<ActRecord> getCache(){
+        List<ActRecordEntity> cache= recordDao.getRecords();
+        ArrayList<ActRecord> dataSet = new ArrayList<>();
+        for(ActRecordEntity ae : cache){
+           dataSet.add(new ActRecord(
+                    ae.getImageid(),
+                    ae.getActivity_type(),
+                    ae.getDuration(),
+                    0.5,
+                    "Today",
+                    getTime(ae.getDate())));
+        }
+        return dataSet;
     }
 
     public static ActRecordRepository getInstance(){
@@ -123,7 +139,7 @@ public class ActRecordRepository implements Observer{
                 break;
             case ON_BICYCLE:
                 imageid = R.drawable.cycle;
-                act = "ON_BICYCLE";
+                act = "Cycle";
                 break;
             case STILL:
                 imageid = R.drawable.still;

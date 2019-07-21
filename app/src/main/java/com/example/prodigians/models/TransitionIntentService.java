@@ -107,8 +107,8 @@ public class TransitionIntentService extends IntentService {
     private void setRecords(){
         dataSet.add(
                 new ActRecord(
-                        R.drawable.walk,
-                        "Walk",
+                        R.drawable.run,
+                        "Run",
                         15,
                         0.57,
                         "Today",

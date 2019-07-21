@@ -25,6 +25,7 @@ public class MainActivityViewModel extends ViewModel {
         }
         mRepo = ActRecordRepository.getInstance();
         mRecords = mRepo.getActivityRecords();
+        //mRecords.setValue(mRepo.getCache());
     }
 
 
