@@ -24,7 +24,7 @@ public class MainActivityViewModel extends ViewModel {
             return;
         }
         mRepo = ActRecordRepository.getInstance();
-        mRecords = mRepo.getRecords();
+        mRecords = mRepo.getActivityRecords();
     }
 
 

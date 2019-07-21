@@ -29,7 +29,7 @@ public class MAVM extends ViewModel {
             return;
         }
         mRepo = ActRecordRepository.getInstance();
-        mRecords = mRepo.getRecords();
+        mRecords = mRepo.getActivityRecords();
     }
 
     public LiveData<List<ActRecord>> getRecords(){
