@@ -58,16 +58,17 @@
 
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Canada"
-        android:id="@+id/distance"
-        android:layout_toRightOf="@+id/time_dur"
-        android:textColor="#000"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="34dp"
-        android:textSize="17sp"/>
+    <!--<TextView-->
+        <!--android:id="@+id/distance"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Canada"-->
+
+        <!--android:layout_toRightOf="@+id/time_dur"-->
+        <!--android:textColor="#000"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:layout_marginLeft="34dp"-->
+        <!--android:textSize="17sp"/>-->
 
 
 

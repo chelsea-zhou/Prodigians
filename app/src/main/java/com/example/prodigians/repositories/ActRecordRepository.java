@@ -11,7 +11,6 @@ import com.example.prodigians.models.ActRecord;
 import com.example.prodigians.models.DetectActivity;
 import com.example.prodigians.models.MyApplication;
 import com.example.prodigians.models.RawData;
-import com.example.prodigians.models.TransitionIntentService;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -19,20 +18,19 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import android.app.Application;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import java.util.Observable;
 import java.util.Observer;
 
-import static com.google.android.gms.location.ActivityTransition.ACTIVITY_TRANSITION_ENTER;
 import static com.google.android.gms.location.DetectedActivity.IN_VEHICLE;
 import static com.google.android.gms.location.DetectedActivity.ON_BICYCLE;
 import static com.google.android.gms.location.DetectedActivity.ON_FOOT;
 import static com.google.android.gms.location.DetectedActivity.RUNNING;
 import static com.google.android.gms.location.DetectedActivity.STILL;
 import static com.google.android.gms.location.DetectedActivity.WALKING;
+import static java.lang.Math.max;
 
 /**
  * Singleton pattern
@@ -76,21 +74,32 @@ public class ActRecordRepository implements Observer{
     }
 
     public String getDate(){
-        String pattern = "yyyy/MM/dd";
+        String pattern = "yyyy/MM/dd HH:mm";
         DateFormat df = new SimpleDateFormat(pattern);
         Date today = Calendar.getInstance().getTime();
         String reportDate = df.format(today);
         return reportDate;
     }
+    public String getTime(String fdate){
+        String time = fdate.substring(11);
+        System.out.println("time is" + time);
+        String hh = time.substring(0,2);
+        System.out.println("hour is" + hh);
+        int h = Integer.parseInt(hh);
+        if (h<12){
+            time += " am";
+        }else{
+            time +=  " pm";
+        }
+        return time;
+
+    }
+    public String getTruncate(String date){
+        //year/month/day
+        return date.substring(0,11);
+    }
 
 
-    // Pretend to get data from a webservice or online source
-//    public MutableLiveData<List<ActRecord>> getRecords(){
-//        setRecords();
-//        MutableLiveData<List<ActRecord>> data = new MutableLiveData<>();
-//        data.setValue(dataSet);
-//        return data;
-//    }
 
 
     public void insert_queue(RawData d){
@@ -100,30 +109,37 @@ public class ActRecordRepository implements Observer{
     public ActRecordEntity process_event(RawData d) {
         int activity = d.act_type;
         int trans = d.trans_type;
-        long time = d.current_time;
+        long end_time = d.current_time;
         String act;
         String date = getDate();
+        int imageid=0;
         int duration = 0;
-        ActRecordEntity act_record = new ActRecordEntity("",0,0,0,"");
+        ActRecordEntity act_record = new ActRecordEntity(0,"",0,0,0,"");
 
         switch (activity) {
             case IN_VEHICLE:
-                act = "IN_VEHICLE";
+                imageid = R.drawable.vehicle;
+                act = "In vehicle";
                 break;
             case ON_BICYCLE:
+                imageid = R.drawable.cycle;
                 act = "ON_BICYCLE";
                 break;
             case STILL:
-                act = "STILL";
+                imageid = R.drawable.still;
+                act = "Still";
                 break;
             case WALKING:
-                act = "WALKING";
+                imageid = R.drawable.walk;
+                act = "Walk";
                 break;
             case RUNNING:
-                act = "RUNNING";
+                imageid = R.drawable.run;
+                act = "Run";
                 break;
+                // should i comment this?
             case ON_FOOT:
-                act = "ON_FOOT";
+                act = "On Foot";
             default:
                 act = "Unknown";
                 break;
@@ -133,8 +149,9 @@ public class ActRecordRepository implements Observer{
             if (data.size() > 0) {
                 for (RawData rd : data) {
                     if (rd.act_type == activity) {
-                        int dur = (int)rd.current_time - (int) time;
-                        act_record = new ActRecordEntity(act,rd.current_time,time,dur,date);
+                        int dur =  max(1,(int) ((end_time -rd.current_time) * Math.pow(10, -9)/60));
+
+                        act_record = new ActRecordEntity(imageid,act,rd.current_time,end_time,dur,date);
                         break;
                     }
                 }
@@ -144,6 +161,8 @@ public class ActRecordRepository implements Observer{
 
         return act_record;
     }
+
+
 
     @Override
     public void update(Observable o,Object actrecord){
@@ -156,13 +175,15 @@ public class ActRecordRepository implements Observer{
             ActRecordEntity ar = process_event(rd);
             insert(ar);
             Log.i("datarepo", "mutate live data ");
+
+
             addNewValue(new ActRecord(
-                    R.drawable.run,
+                    ar.getImageid(),
                     ar.getActivity_type(),
                     ar.getDuration(),
                     0.5,
-                    ar.getDate(),
-                    "04:32 APM"));
+                    "Today",
+                    getTime(ar.getDate())));
         }
     }
 

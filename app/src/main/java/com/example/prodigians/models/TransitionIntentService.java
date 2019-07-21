@@ -112,7 +112,7 @@ public class TransitionIntentService extends IntentService {
                         15,
                         0.57,
                         "Today",
-                        "09:18 AM"
+                        "09:18 am"
 
                 ));
         dataSet.add(
@@ -122,7 +122,7 @@ public class TransitionIntentService extends IntentService {
                         53,
                         0,
                         "Today",
-                        "09:37 AM"
+                        "09:37 am"
 
                 ));
 
