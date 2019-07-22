@@ -34,9 +34,8 @@
 
     <ImageView
         android:id="@+id/imageSofa"
-        android:layout_width="395dp"
-        android:layout_height="237dp"
-        android:layout_marginRight="8dp"
+        android:layout_width="401dp"
+        android:layout_height="236dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"

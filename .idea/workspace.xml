@@ -39,14 +39,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d0708764-4750-4da9-9354-3e65d78a1926" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gradle/5.1.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.1.1/executionHistory/executionHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.1.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.1.1/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.1.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.1.1/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.1.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.1.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.1.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.1.1/javaCompile/javaCompile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/prodigians/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/prodigians/MainActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -85,8 +77,8 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
           <provider editor-type-id="android-designer2" />
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="344">
-              <caret line="42" column="53" lean-forward="true" selection-start-line="42" selection-start-column="53" selection-end-line="42" selection-end-column="53" />
+            <state relative-caret-position="328">
+              <caret line="38" column="8" selection-start-line="38" selection-start-column="8" selection-end-line="38" selection-end-column="8" />
             </state>
           </provider>
         </entry>
@@ -344,7 +336,21 @@
       <option name="project" value="LOCAL" />
       <updated>1563755782214</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="add background">
+      <created>1563758581007</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1563758581007</updated>
+    </task>
+    <task id="LOCAL-00003" summary="add background">
+      <created>1563758593405</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1563758593405</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TodoView">
@@ -358,7 +364,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="78" y="22" width="1361" height="797" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info id="Structure" order="0" sideWeight="0.50208336" side_tool="true" weight="0.04021448" />
       <window_info id="Image Layers" order="1" />
@@ -375,7 +380,7 @@
       <window_info anchor="bottom" id="Debug" order="3" />
       <window_info anchor="bottom" id="Terminal" order="4" weight="0.3286385" />
       <window_info anchor="bottom" id="Event Log" order="5" sideWeight="0.5016155" side_tool="true" weight="0.16118936" />
-      <window_info anchor="bottom" id="Version Control" order="6" weight="0.2609929" />
+      <window_info anchor="bottom" id="Version Control" order="6" visible="true" weight="0.2680851" />
       <window_info anchor="bottom" id="Build" order="7" sideWeight="0.49919224" weight="0.1716312" />
       <window_info anchor="bottom" id="Find" order="8" weight="0.3233909" />
       <window_info anchor="bottom" id="Run" order="9" sideWeight="0.4983845" weight="0.04694836" />
@@ -383,7 +388,7 @@
       <window_info anchor="right" id="Gradle" order="1" />
       <window_info anchor="right" id="Theme Preview" order="2" />
       <window_info anchor="right" id="Palette&#9;" order="3" />
-      <window_info anchor="right" id="Preview" order="4" sideWeight="0.49315068" weight="0.2918878" />
+      <window_info active="true" anchor="right" id="Preview" order="4" sideWeight="0.49315068" visible="true" weight="0.2918878" />
       <window_info anchor="right" id="Device File Explorer" order="5" side_tool="true" weight="0.49676898" />
       <window_info anchor="right" x="0" y="0" width="130" height="598" id="Documentation" order="6" sideWeight="0.5068493" side_tool="true" weight="0.2918878" />
     </layout>
@@ -419,7 +424,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="merge" />
     <MESSAGE value="Merge branch 'master' of https://github.com/chelsea-zhou/Prodigians&#10;&#10;Conflicts:&#10;&#9;.gradle/5.1.1/executionHistory/executionHistory.bin&#10;&#9;.gradle/5.1.1/executionHistory/executionHistory.lock&#10;&#9;.gradle/5.1.1/fileHashes/fileHashes.bin&#10;&#9;.gradle/5.1.1/fileHashes/fileHashes.lock&#10;&#9;.gradle/5.1.1/javaCompile/classAnalysis.bin&#10;&#9;.gradle/5.1.1/javaCompile/javaCompile.lock&#10;&#9;.gradle/buildOutputCleanup/buildOutputCleanup.lock&#10;&#9;.idea/workspace.xml" />
-    <option name="LAST_COMMIT_MESSAGE" value="Merge branch 'master' of https://github.com/chelsea-zhou/Prodigians&#10;&#10;Conflicts:&#10;&#9;.gradle/5.1.1/executionHistory/executionHistory.bin&#10;&#9;.gradle/5.1.1/executionHistory/executionHistory.lock&#10;&#9;.gradle/5.1.1/fileHashes/fileHashes.bin&#10;&#9;.gradle/5.1.1/fileHashes/fileHashes.lock&#10;&#9;.gradle/5.1.1/javaCompile/classAnalysis.bin&#10;&#9;.gradle/5.1.1/javaCompile/javaCompile.lock&#10;&#9;.gradle/buildOutputCleanup/buildOutputCleanup.lock&#10;&#9;.idea/workspace.xml" />
+    <MESSAGE value="add background" />
+    <option name="LAST_COMMIT_MESSAGE" value="add background" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_second.xml">
@@ -744,8 +750,8 @@
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
       <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="344">
-          <caret line="42" column="53" lean-forward="true" selection-start-line="42" selection-start-column="53" selection-end-line="42" selection-end-column="53" />
+        <state relative-caret-position="328">
+          <caret line="38" column="8" selection-start-line="38" selection-start-column="8" selection-end-line="38" selection-end-column="8" />
         </state>
       </provider>
     </entry>
