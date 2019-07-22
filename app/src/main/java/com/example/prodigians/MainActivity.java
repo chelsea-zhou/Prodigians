@@ -47,7 +47,8 @@ public class MainActivity extends AppCompatActivity {
     CallbackManager cm;
     ShareDialog sd;
     ImageView imageView;
-    ImageView burgerImage;
+    ImageView windowImage;
+    ImageView sofaImage;
     AnimationDrawable anima;
     Button RecordButton;
     Button ShareButton;
@@ -105,8 +106,10 @@ public class MainActivity extends AppCompatActivity {
 
 
         imageView = (ImageView)findViewById(R.id.image);
-//      burgerImage = (ImageView) findViewById(R.id.imageBurger);
-//      burgerImage.setImageResource(R.mipmap.burger2);
+        windowImage = (ImageView) findViewById(R.id.imageWindow);
+        windowImage.setImageResource(R.mipmap.window);
+        sofaImage = (ImageView) findViewById(R.id.imageSofa);
+        sofaImage.setImageResource(R.mipmap.sofa);
         paramsInit = imageView.getLayoutParams();
         imageView.setBackgroundResource(R.drawable.animation);
 
