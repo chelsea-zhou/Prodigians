@@ -42,7 +42,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         // Set the name of the 'ActRecord'
         ((ViewHolder)viewHolder).mName.setText(mActRecords.get(i).getActivity() );
 
-        ((ViewHolder)viewHolder).distance.setText( String.valueOf(mActRecords.get(i).getDistance()) + " miles");
+        //((ViewHolder)viewHolder).distance.setText( String.valueOf(mActRecords.get(i).getDistance()) + " miles");
 
         if (mActRecords.get(i).getTime() >60){
             String fulltime;
@@ -95,7 +95,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             mImage = itemView.findViewById(R.id.image);
             mName = itemView.findViewById(R.id.act_type);
             time = itemView.findViewById(R.id.time_dur);
-            distance = itemView.findViewById(R.id.distance);
+            //distance = itemView.findViewById(R.id.distance);
             exact_time = itemView.findViewById(R.id.exact_time);
             date = itemView.findViewById(R.id.Date);
 
