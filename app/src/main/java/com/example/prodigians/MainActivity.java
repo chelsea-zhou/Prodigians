@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
     ViewGroup.LayoutParams paramsInit;
     int defaultWidth = 750;
     int maxWidth = 1150;
+    int ifSmile = 1;
     int ifAnimating = 1;
     int screenWidth;
     int screenHeight;
@@ -104,8 +105,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         imageView = (ImageView)findViewById(R.id.image);
-        burgerImage = (ImageView) findViewById(R.id.imageBurger);
-        burgerImage.setImageResource(R.mipmap.burger2);
+//      burgerImage = (ImageView) findViewById(R.id.imageBurger);
+//      burgerImage.setImageResource(R.mipmap.burger2);
         paramsInit = imageView.getLayoutParams();
         imageView.setBackgroundResource(R.drawable.animation);
 
@@ -130,6 +131,31 @@ public class MainActivity extends AppCompatActivity {
         Log.i("myapp",  String.valueOf(myInt));
         imageView.getLayoutParams().width = myInt;
 
+        if(myInt >= 950){
+            anima.stop();
+            anima.setVisible(false, true);
+            animation.cancel();
+            imageView = (ImageView) findViewById(R.id.image);
+            paramsInit = imageView.getLayoutParams();
+            imageView.setBackgroundResource(R.drawable.animation2);
+            imageView.setVisibility(View.VISIBLE);
+            anima = (AnimationDrawable) imageView.getBackground();
+            anima.start();
+            animation.start();
+        }
+        else {
+            anima.stop();
+            anima.setVisible(false, true);
+            animation.cancel();
+            imageView = (ImageView) findViewById(R.id.image);
+            paramsInit = imageView.getLayoutParams();
+            imageView.setBackgroundResource(R.drawable.animation);
+            imageView.setVisibility(View.VISIBLE);
+            anima = (AnimationDrawable) imageView.getBackground();
+            anima.start();
+            animation.start();
+        }
+
         mainViewModel.getRecords().observe(this, new Observer<List<ActRecord>>() {
             @Override
             public void onChanged(@Nullable List<ActRecord> actRecords) {
@@ -148,6 +174,7 @@ public class MainActivity extends AppCompatActivity {
                         imageView.getLayoutParams().width -= 100;
                         myInt -= 100;
                     }
+                    changeSmile();
                 }
             }
         }});
@@ -216,6 +243,36 @@ public class MainActivity extends AppCompatActivity {
         Intent I = new Intent(this, RecordService.class);
         stopService(I);
         ifStarted = !ifStarted;
+    }
+
+    private void changeSmile(){
+        if(myInt == 950 && ifSmile == 1){
+            anima.stop();
+            anima.setVisible(false, true);
+            animation.cancel();
+            imageView = (ImageView) findViewById(R.id.image);
+            paramsInit = imageView.getLayoutParams();
+            imageView.setBackgroundResource(R.drawable.animation2);
+            imageView.setVisibility(View.VISIBLE);
+            anima = (AnimationDrawable) imageView.getBackground();
+            anima.start();
+            animation.start();
+            ifSmile = 0;
+        }
+        else if(myInt == 950 && ifSmile == 0){
+            anima.stop();
+            anima.setVisible(false, true);
+            animation.cancel();
+            imageView = (ImageView) findViewById(R.id.image);
+            paramsInit = imageView.getLayoutParams();
+            imageView.setBackgroundResource(R.drawable.animation);
+            imageView.setVisibility(View.VISIBLE);
+            anima = (AnimationDrawable) imageView.getBackground();
+            anima.start();
+            animation.start();
+
+            ifSmile = 1;
+        }
     }
 
     @Override
