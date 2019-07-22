@@ -68,13 +68,17 @@ public class ActRecordRepository implements Observer{
         List<ActRecordEntity> cache= recordDao.getRecords();
         ArrayList<ActRecord> dataSet = new ArrayList<>();
         for(ActRecordEntity ae : cache){
+            //System.out.println("get db data-date" + ae.getDate());
+            if (ae.getDate().length() < 5 ){
+                continue;
+            }
            dataSet.add(new ActRecord(
                     ae.getImageid(),
                     ae.getActivity_type(),
                     ae.getDuration(),
                     0.5,
                     "Today",
-                    getTime(ae.getDate())));
+                    gettime(ae.getDate())));
         }
         return dataSet;
     }
@@ -96,7 +100,8 @@ public class ActRecordRepository implements Observer{
         String reportDate = df.format(today);
         return reportDate;
     }
-    public String getTime(String fdate){
+    public String gettime(String fdate){
+        System.out.println("date is " + fdate);
         String time = fdate.substring(11);
         System.out.println("time is" + time);
         String hh = time.substring(0,2);
@@ -199,7 +204,7 @@ public class ActRecordRepository implements Observer{
                     ar.getDuration(),
                     0.5,
                     "Today",
-                    getTime(ar.getDate())));
+                    gettime(ar.getDate())));
         }
     }
 

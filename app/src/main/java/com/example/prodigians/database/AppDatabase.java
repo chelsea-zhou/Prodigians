@@ -19,6 +19,7 @@ public abstract class AppDatabase extends RoomDatabase {
             System.out.println("created database");
             instance = Room.databaseBuilder(context,
                     AppDatabase.class, "app_database")
+                    .allowMainThreadQueries()
                     .fallbackToDestructiveMigration()
                     .build();
         }
